@@ -1,0 +1,54 @@
+<div class="category-tab shop-details-tab" id="commetns"><!--category-tab-->
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <li><a href="#details" data-toggle="tab">توضیحات بیشتر</a></li>
+            <li class="active"><a href="#reviews" data-toggle="tab">نظرات
+                ({{ product_comments_count }})</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade " id="details">
+            <p>">{{ object.description|safe }}</p>
+        </div>
+
+        <div class="tab-pane fade active in" id="reviews">
+            <div class="col-sm-12">
+                {% for product_comment in product_comments.all %}
+                    <ul>
+                        <li><a href=""><i class="fa fa-user"></i>{{ product_comment.full_name }}</a></li>
+                        <li><a href=""><i
+                                class="fa fa-clock-o"></i>{{ product_comment.created_time.time }}
+                        </a>
+                        </li>
+                        <li><a href=""><i
+                                class="fa fa-calendar-o"></i>{{ product_comment.created_date }}</a>
+                        </li>
+                    </ul>
+                    <p class="blog-post-area">{{ product_comment.text|safe }}</p>
+
+                {% endfor %}
+
+                <p><b>نظـر خود را بنویسیـد</b></p>
+
+                <form action="#">
+                        <span>
+                            <input id="name_id" type="text" placeholder="نام و نام خانوادگـی"/>
+                            <input id="email_id" type="email" placeholder="آدرس ایمیـل"/>
+                        </span>
+                    <textarea id="text_id" name="text" placeholder="نظر شما"></textarea>
+                    <div class="center-danger">
+                        <div>
+                            <p class="text-danger" id="PDanger"></p>
+                        </div>
+                        <button onclick="sendProductComment({{ object.id }})" type="button"
+                                class="btn btn-default pull-left">
+                            ارسـال
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div><!--/category-tab-->

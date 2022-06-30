@@ -1,0 +1,17 @@
+{% extends 'shared/_layout.html' %}
+
+{% block title %}
+    404
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <div class="logo-404">
+            <a href=""><img src="#" alt=""/></a>
+        </div>
+        <div class="content-404">
+            <img src="/static/images/404/404.png" class="img-responsive" alt=""/>
+            <h1><b>متأسفانـه</b> صفحه مورد نظـر شما یافت نشد!</h1>
+            <h2><a href="{% url 'HomePageUrl' %}">برو به صفحـه اصلی</a></h2>
+        </div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'shared/_layout.html' %}
+{% load thumbnail %}
+{% load render_partial %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="blog-post-area">
+                        <h2 class="title text-center">{{ article.title }}</h2>
+                        <div class="single-blog-post">
+                            <h3>{{ article.title }}</h3>
+                            <div class="post-meta">
+                                <ul>
+                                    <li><i class="fa fa-user"></i>{{ article.author }}</li>
+                                    <li><i class="fa fa-clock-o"></i>{{ article.CreatedTime }}</li>
+                                    <li><i class="fa fa-calendar"></i>{{ article.CreatedDate }}</li>
+                                </ul>
+                            </div>
+                            <a href="">
+                                {% thumbnail article.image "862x398" quality=90 crop='center' as im %}
+                                    <img src="{{ im.url }}">
+                                {% endthumbnail %}
+                            </a>
+                            <p>{{ article.description }}</p>
+                        </div>
+                    </div><!--/blog-post-area-->
+
+                    <div class="media commnets">
+                        <a class="pull-right" href="#">
+                            {% if  article.author.avatar %}
+                                {% thumbnail article.author.avatar "121x86" quality=90 crop='center' as im %}
+                                    <img src="{{ im.url }}">
+                                {% endthumbnail %}
+                            {% else %}
+                                <img class="media-object" src="/static/images/blog/Customer.jpg" alt="">
+                            {% endif %}
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ article.author }}</h4>
+                            <p>{{ article.author.about_us }}</p>
+                        </div>
+                    </div><!--Comments-->
+                    <div class="response-area" id="form_id">
+                        <h2>نظرات ({{ commentCount }})</h2>
+                        <ul class="media-list">
+                            {% for comment in comments.all %}
+                                <li class="media">
+                                    <a class="pull-right" href="#">
+                                        <img class="media-object" src="{{ comment.user.avatar.url }}" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <ul class="sinlge-post-meta">
+                                            <li><i class="fa fa-user"></i>{{ comment.user }}</li>
+                                            <li><i class="fa fa-clock-o"></i>{{ comment.createdTime }}</li>
+                                            <li><i class="fa fa-calendar"></i>{{ comment.createdDate }}</li>
+                                        </ul>
+                                        <p>{{ comment.message }}</p>
+                                        <a class="btn btn-primary" onclick="FillParentId({{ comment.id }})"><i
+                                                class="fa fa-reply"></i>پاسـخ</a>
+                                    </div>
+                                </li>
+                                {% for sub_comment in comment.articlecommentmodel_set.all %}
+                                    {% if sub_comment.is_read_admin %}
+                                        <li class="media second-media " id="single_comment_box_{{ comment.id }}">
+                                            <a class="pull-right" href="#">
+                                                <img class="media-object" src="{{ sub_comment.user.avatar.url }}"
+                                                     alt="">
+                                            </a>
+                                            <div class="media-body">
+                                                <ul class="sinlge-post-meta">
+                                                    <li><i class="fa fa-user"></i>{{ sub_comment.full_name }}</li>
+                                                    <li><i class="fa fa-clock-o"></i>{{ sub_comment.createdTime }}</li>
+                                                    <li><i class="fa fa-calendar"></i>{{ sub_comment.createdDate }}</li>
+                                                </ul>
+                                                <p>{{ sub_comment.message }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div><!--/Response-area-->
+                    <div class="replay-box" id="comment_form">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="text-area">
+                                    <input type="hidden" id="parent_id" value="">
+                                    <div class="blank-arrow">
+                                        <label>متن پیام</label>
+                                    </div>
+                                    <span>*</span>
+                                    <textarea name="message" id="commentText" rows="11"></textarea>
+                                    <a class="btn btn-primary" onclick="sendArticleComment({{ article.id }})">ارسـال
+                                        نظـر
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h2>نظـر خود را بنویسیـد</h2>
+                                <form>
+                                    <div class="blank-arrow">
+                                        <label>نام</label>
+                                    </div>
+                                    <span>*</span>
+                                    <input id="name" type="text" placeholder="نام شما ...">
+                                    <div class="blank-arrow">
+                                        <label>آدرس ایمیـل</label>
+                                    </div>
+                                    <span>*</span>
+                                    <input id="email" type="email" placeholder="ایمیـل شما ...">
+                                    <div class="blank-arrow">
+                                        <label>وبسایت</label>
+                                    </div>
+                                    <input type="email" placeholder="آدرس وبسایـت">
+                                    <div class="blank-arrow">
+                                        <p class="text-danger" id="PDangerArticle"></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!--/Repaly Box-->
+                </div>
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        {% render_partial 'articles_module.views.article_categories_component' %}
+                        {% for banner in banners %}
+                            <div class="shipping text-center"><!--shipping-->
+                                <a href="{{ banner.url }}"><img src="{{ banner.image.url }}" alt=""/></a>
+                            </div><!--/shipping-->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

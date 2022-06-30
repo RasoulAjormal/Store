@@ -1,0 +1,31 @@
+.errorlist {
+    padding-right: 0 !important;
+}
+
+.errorlist li {
+    color: red;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
+.di {
+    font-size: 30px;
+    color: red;
+}
+
+.center-danger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.p-hidden {
+    display: none;
+}
+.map-contact {
+    overflow: hidden;
+    margin-bottom: 40px;
+}

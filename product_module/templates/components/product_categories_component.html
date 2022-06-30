@@ -1,0 +1,14 @@
+<h2>دسته بندی محصولات</h2>
+<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+    {% for category in main_categories %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <li><a href="{% url 'ProductCategoryPageUrl' category_id=category.id %}"><span
+                            class="pull-left">({{ category.category_count }})</span>{{ category.title }}</a>
+                    </li>
+                </h4>
+            </div>
+        </div>
+    {% endfor %}
+</div><!--/category-productsr-->

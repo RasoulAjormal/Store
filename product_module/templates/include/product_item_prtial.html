@@ -1,0 +1,19 @@
+{% load thumbnail %}
+{% load poll_extras %}
+{% block content %}
+    <div class="col-sm-{{ ColSize }}">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    <img src="{{ product.image.url }}" alt=""/>
+                    <h2>{{ product.price|three_digits_currency }}</h2>
+                    <p>{{ product.title }}</p>
+                    <a href="{{ product.get_absolute_url }}"
+                       class="btn btn-default add-to-cart"><i
+                            class="fa fa-shopping-cart"></i>نمایش جزئیات محصول</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
